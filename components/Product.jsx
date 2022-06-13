@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Product = ({product}) => {
-  console.log('product =>>',product)
+  // console.log('product =>>',product)
   return (
     <div>Product</div>
   )
