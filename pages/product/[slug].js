@@ -5,6 +5,9 @@ import { urlFor } from "../../lib/client";
 
 import Product from "./../../components/Product";
 
+import { useStateContext } from "../../context/StateContext";
+
+
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -16,6 +19,8 @@ const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
 
   const { image, name, details, price } = product;
+
+  const {increaseQty,decreaseQty,qty} = useStateContext()
   return (
     <div>
       <div className="product-detail-container">
@@ -26,6 +31,7 @@ const ProductDetails = ({ product, products }) => {
           <div className="small-images-container">
             {image?.map((item, i) => (
               <img
+                 id={i}
                 src={urlFor(item)}
                 className={i === index ? 'small-image selected-image' : 'small-image'}
                 onMouseEnter={() => setIndex(i)}
@@ -54,11 +60,11 @@ const ProductDetails = ({ product, products }) => {
           <div className="quantity">
             <h3>Quantity</h3>
             <p className="quantity-desc">
-              <span className="minus">
+              <span className="minus" onClick={decreaseQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num">0</span>
-              <span className="plus">
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={increaseQty}>
                 <AiOutlinePlus />
               </span>
             </p>
