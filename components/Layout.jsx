@@ -7,7 +7,7 @@ import  Footer from './Footer';
 
 
 const Layout = ({children}) => {
-  console.log(children)
+  // console.log(children)
   return (
     <div className='layout'>
        <Head>
@@ -17,7 +17,7 @@ const Layout = ({children}) => {
          <Navbar/>
        </header>
        <main className='main-container'>
-           Empty
+           {children}
        </main>
 
        <footer>
