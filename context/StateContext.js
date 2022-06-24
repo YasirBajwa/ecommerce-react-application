@@ -38,21 +38,38 @@ export const StateContext = ({ children }) => {
     toast.success(`${qty} ${product.name} added to the cart`);
   };
 
+  const onDelete = (product)=>{
+
+    foundProduct = cartItems.find((item) => item._id === product._id);
+    const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity);
+    setTotalQuantity((prevTotalQty) => prevTotalQty - foundProduct.quantity);
+    setcartItems(newCartItems)
+  }
 
   const toggleCartItemQunatity = (id,value) => {
        foundProduct = cartItems.find((item) =>item._id === id);
        index =  cartItems.findIndex((product) => product._id === id);
+       const newCartItems = cartItems.filter((item) => item._id !== id)
+
+      //  let updatedCartItems = cartItems.map((item) =>
+      //   item._id === foundProduct._id
+      //     ? { ...foundProduct, quantity: foundProduct.quantity + 1 }
+      //     : item
+      // )
+
 
        if(value === 'inc'){
-            setcartItems( [...cartItems, {...foundProduct,quantity:foundProduct.quantity+1}])
-            foundProduct.quantity += 1;
+            setcartItems( [...newCartItems, {...foundProduct,quantity:foundProduct.quantity+1}])
+            // foundProduct.quantity += 1;
             setTotalPrice( (prevTotal) => prevTotal + foundProduct.price)
             setTotalQuantity((prevTotalQty) => prevTotalQty + 1)
        }
        else if(value === 'dec'){
                 if(foundProduct.quantity > 1){
-                  setcartItems( [...cartItems, {...foundProduct,quantity:foundProduct.quantity - 1}])
-                  foundProduct.quantity -= 1;
+                  setcartItems( [...newCartItems, {...foundProduct,quantity:foundProduct.quantity - 1}])
+                  // foundProduct.quantity -= 1;
                   setTotalPrice( (prevTotal) => prevTotal - foundProduct.price)
                   setTotalQuantity((prevTotalQty) => prevTotalQty - 1)
                 }
@@ -81,7 +98,8 @@ export const StateContext = ({ children }) => {
         decreaseQty,
         addCart,
         setShowCart,
-        toggleCartItemQunatity
+        toggleCartItemQunatity,
+        onDelete
       }}
     >
       {children}
